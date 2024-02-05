@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import VenuePage from "./pages/VenuePage";
 import VenueListPage from "./pages/VenueListPage";
+import VenueDetailPage from './pages/VenueDetailPage';  
 
 
 axios.defaults.baseURL = "http://127.0.0.1:4000";
@@ -21,6 +22,8 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/venue" element={<VenuePage />} />
       <Route path="/venue/list" element={<VenueListPage />} />
+      <Route path="/venue/:bookName" element={<VenueDetailPage />}/> 
+
 
   
     </Routes>

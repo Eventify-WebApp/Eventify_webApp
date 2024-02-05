@@ -23,7 +23,7 @@
  
 }
 
-.LoginPage, .RegisterPage, .VenuePage, .VenueListPage {
+.LoginPage, .RegisterPage, .VenuePage {
     display: flex;
    flex-direction: column;
   
@@ -58,4 +58,30 @@
     border-style: solid;
 
 
+}
+
+.venue-container {
+  display: flex;
+}
+
+.content-section {
+  flex-grow: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 1%;
+  box-sizing: border-box;
+  /* Add any other styles for the content section */
+}
+
+.Filter {
+ 
+    width: 30%; /* Adjust the width as needed */
+  padding: 1%;
+  box-sizing: border-box;
+
+}
+
+.custom-link {
+  color: black; /* Set your desired text color */
+  text-decoration: none; /* Remove the default underline */
+  cursor: pointer; /* Show a pointer cursor on hover */
 }

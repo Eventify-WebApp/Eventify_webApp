@@ -62,14 +62,38 @@ async function insert_Venue(Name, Capacity, Address, Category, Landlord_id){
     return result
 }
 
-async function get_Venue(pageNumber, pageSize) {
+async function get_Venue(pageNumber, pageSize, City) {
   const offset = (pageNumber - 1) * pageSize;
 
+    if (City==='All'){
+        City = '%';
+    }
+    console.log(City)
   const result = await pool.query(
-    `SELECT Name, Capacity, Address FROM Venue ORDER BY ID LIMIT ? OFFSET ?`,
-    [pageSize, offset]
+    `SELECT Name, Capacity, Address FROM Venue WHERE City LIKE ? ORDER BY ID LIMIT ? OFFSET ?`,
+    [City, pageSize, offset]
   );
 
+  return result[0];
+}
+
+
+async function get_Venue_info(Name) {
+  
+  const result = await pool.query(`SELECT Name, Capacity, Address FROM Venue WHERE Name = ?`,[Name]);
+
+  return result[0];
+}
+
+async function get_Venue_Country() {
+
+  const result = await pool.query(`SELECT DISTINCT Country FROM Venue ORDER BY Country`);
+  return result[0];
+}
+
+async function get_Venue_City() {
+
+  const result = await pool.query(`SELECT DISTINCT City FROM Venue ORDER BY City`);
   return result[0];
 }
 
@@ -84,4 +108,4 @@ async function get_CategoryID(Category){
 }
 
 
-export {insert_Spectator, get_Spectator, insert_Landlord, get_Landlord, insert_Venue, get_Performer, insert_Performer, get_Venue};
+export {insert_Spectator, get_Spectator, insert_Landlord, get_Landlord, insert_Venue, get_Performer, insert_Performer, get_Venue, get_Venue_City, get_Venue_Country, get_Venue_info};
