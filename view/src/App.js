@@ -6,29 +6,27 @@ import RegisterPage from "./pages/RegisterPage";
 import VenuePage from "./pages/VenuePage";
 import VenueListPage from "./pages/VenueListPage";
 import VenueDetailPage from './pages/VenueDetailPage';  
+import Header from "./Header";
+import Layout from "./Layout";
+
 
 
 axios.defaults.baseURL = "http://127.0.0.1:4000";
 
 function App() {
-
-
   return (
-  
-  <Router>
-    <Routes>
-      
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/venue" element={<VenuePage />} />
-      <Route path="/venue/list" element={<VenueListPage />} />
-      <Route path="/venue/:bookName" element={<VenueDetailPage />}/> 
+    <Router>
+      <Header /> 
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="venue" element={<VenuePage />} />
+          <Route path="venue/list" element={<VenueListPage />} />
+          <Route path="venue/:bookName" element={<VenueDetailPage />} />
 
-
-  
-    </Routes>
-  </Router>
-   
+      </Routes>
+    </Router>
   );
 }
 

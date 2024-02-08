@@ -5,7 +5,7 @@
 
 
 .login-element, .register-element, .venue-element {
-    border-radius: 1em;
+    border-radius:2em;
     margin: 0.5em;
    
 }
@@ -51,7 +51,7 @@
 .venue-list {
 
     width: 700px;
-    border-radius: 1em;
+    border-radius: 2.5em;
     margin: 0.5em;
     padding: 50px;
     
@@ -85,3 +85,30 @@
   text-decoration: none; /* Remove the default underline */
   cursor: pointer; /* Show a pointer cursor on hover */
 }
+
+.image-uploader {
+  width: 50px
+}
+
+.image-previews {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the images horizontally */
+  gap: 16px; /* Add some spacing between images */
+}
+
+.image-preview {
+  width: 300px; /* Set the width of each image preview container */
+  overflow: hidden; /* Ensure the image doesn't overflow its container */
+  display: flex; /* Ensure the image is centered vertically and horizontally */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+}
+
+.preview-image {
+  max-width: 100%; /* Ensure the image fills the preview container */
+  max-height: 100%; /* Ensure the image fills the preview container */
+  object-fit: contain; /* Display the entire image within the container */
+}
+
+

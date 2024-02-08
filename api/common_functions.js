@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 
 async function token_verification(req, res, next){
     
-    
+  
 
     try {
         // Verify the token asynchronously
@@ -14,7 +14,9 @@ async function token_verification(req, res, next){
      
         if(req.body.token === undefined){
             const decoded = await jwt.verify(req.headers['token'], process.env.ACCESS_TOKEN_SECRET);
+            console.log("Decoded: ", decoded)
             req.user = decoded;
+
         }
         else{
             const decoded = await jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET);

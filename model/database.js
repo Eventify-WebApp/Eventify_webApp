@@ -63,18 +63,24 @@ async function insert_Venue(Name, Capacity, Address, Category, Landlord_id){
 }
 
 async function get_Venue(pageNumber, pageSize, City) {
+  console.log(pageNumber)
   const offset = (pageNumber - 1) * pageSize;
 
     if (City==='All'){
-        City = '%';
-    }
-    console.log(City)
-  const result = await pool.query(
-    `SELECT Name, Capacity, Address FROM Venue WHERE City LIKE ? ORDER BY ID LIMIT ? OFFSET ?`,
-    [City, pageSize, offset]
-  );
-
+    const result = await pool.query(`SELECT ID, Name, Capacity, Address FROM Venue ORDER BY ID LIMIT ? OFFSET ?`,
+    [pageSize, offset]);
   return result[0];
+    }
+    else{
+    const result = await pool.query(
+    `SELECT ID, Name, Capacity, Address FROM Venue WHERE City=? ORDER BY ID LIMIT ? OFFSET ?`,
+    [City, pageSize, offset]);
+  return result[0];
+    }
+    
+  
+
+  
 }
 
 

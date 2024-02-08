@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
-import '../app.css';
 
 function useBookSearch(pageNumber, selectedCity) {
   const [loading, setLoading] = useState(true);
@@ -26,8 +25,10 @@ function useBookSearch(pageNumber, selectedCity) {
           },
           { withCredentials: true }
         );
+        
+        setBooks(prevBooks => [...new Set([...prevBooks, ...response.data])]);
 
-        setBooks(prevBooks => [...new Set([...prevBooks, ...response.data.map(b => b.Name)])]);
+        //setBooks(prevBooks => [...new Set([...prevBooks, ...response.data.map(b => b.Name)])]);
         setHasMore(response.data.length > 0);
       } catch (e) {
         setError(true);
@@ -80,6 +81,8 @@ function VenueListPage() {
 
   const lastBookElementRef = useCallback(
     (node) => {
+
+      
       if (loading) return;
 
       if (observer.current) observer.current.disconnect();
@@ -105,7 +108,7 @@ function VenueListPage() {
   };
 
 
-
+console.log(books)
   return (
     <div className='venue-container'>
       <div className='Filter'>
@@ -116,10 +119,13 @@ function VenueListPage() {
       </div>
       <div className='content-section'>
         {books.map((book, index) => {
+          
+          const key = `${book.ID}-${index}`; // Assuming `id` is a unique identifier for each book
+
           if (books.length === index + 1) {
-            return <Link  to={`/venue/${book}`} key ={book} className="custom-link"><div className='venue-list' ref={lastBookElementRef} key={book}>{book}</div></Link>;
+            return <Link  to={`/venue/${book.Name}`} key ={key} className="custom-link"><div className='venue-list' ref={lastBookElementRef} key={key}>{book.Capacity}</div></Link>;
           } else {
-            return <Link  to={`/venue/${book}`} key ={book} className="custom-link"><div className='venue-list' key={book}>{book}</div></Link>;
+            return <Link  to={`/venue/${book.Name}`} key ={key} className="custom-link"><div className='venue-list' key={key}>{book.Name}</div></Link>;
           }
         })}
         <div>{loading && 'Loading...'}</div>
