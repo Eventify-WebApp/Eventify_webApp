@@ -11,11 +11,12 @@ import venue from './routes/Venue.js'
 import { token_verification } from './common_functions.js';
 import { BlobServiceClient, StorageSharedKeyCredential } from '@azure/storage-blob';
 import multer from 'multer';
+import path from 'path'
 
-dotenv.config()
+dotenv.config({path: 'api/.env'})
 
 const app = express()
-app.use(cors( {origin: 'http://localhost:5000',
+app.use(cors( {origin: process.env.BASE_URL + `:` + process.env.FRONTEND_PORT,
   credentials: true,
   secure: true}));
 
@@ -24,7 +25,7 @@ app.use(express.json())
 
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000');
+  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL + `:` + process.env.FRONTEND_PORT);
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
@@ -114,7 +115,8 @@ app.use((err, req, res, next) => {
 })
 
 
-app.listen(4000, () =>{
+
+app.listen(process.env.BACKEND_PORT, () =>{
 console.log('Server is listening on port 4000...')
 });
 

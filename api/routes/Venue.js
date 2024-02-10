@@ -136,7 +136,6 @@ router.route('/list').post(async (req, res) => {
       
     }
     
-    console.log(images.length)
     const responseObject = {
       result: result,
       images: images

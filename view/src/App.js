@@ -11,7 +11,7 @@ import Layout from "./Layout";
 
 
 
-axios.defaults.baseURL = "http://127.0.0.1:4000";
+axios.defaults.baseURL = process.env.BASE_URL + `:` + process.env.BACKEND_PORT;
 
 function App() {
   return (
