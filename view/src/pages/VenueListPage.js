@@ -8,6 +8,8 @@ function useBookSearch(pageNumber, selectedCity) {
   const [error, setError] = useState(false);
   const [books, setBooks] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [images, setImages] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,17 +21,18 @@ function useBookSearch(pageNumber, selectedCity) {
           '/venue/list',
           {
             pageNumber: pageNumber,
-            pageSize: 15,
+            pageSize: 2,
             City: selectedCity,
             token: localStorage.getItem('Spectator-Token'),
           },
           { withCredentials: true }
         );
-        
-        setBooks(prevBooks => [...new Set([...prevBooks, ...response.data])]);
+        setBooks(prevBooks => [...new Set([...prevBooks, ...response.data.result])]);
+      setImages(prevImages => [...prevImages, ...response.data.images]); // Append new images to existing ones
+
 
         //setBooks(prevBooks => [...new Set([...prevBooks, ...response.data.map(b => b.Name)])]);
-        setHasMore(response.data.length > 0);
+        setHasMore(response.data.result.length > 0);
       } catch (e) {
         setError(true);
       } finally {
@@ -46,7 +49,7 @@ function useBookSearch(pageNumber, selectedCity) {
     setBooks([]);
   }, [selectedCity]);
 
-  return { loading, error, books, hasMore };
+  return { loading, error, books, hasMore, images };
 }
 
 
@@ -74,7 +77,8 @@ function VenueListPage() {
     books,
     hasMore,
     loading,
-    error
+    error, 
+    images
   } = useBookSearch(pageNumber, selectedCity);
 
   const observer = useRef();
@@ -108,7 +112,8 @@ function VenueListPage() {
   };
 
 
-console.log(books)
+
+
   return (
     <div className='venue-container'>
       <div className='Filter'>
@@ -121,11 +126,18 @@ console.log(books)
         {books.map((book, index) => {
           
           const key = `${book.ID}-${index}`; // Assuming `id` is a unique identifier for each book
-
+          const imageIndex = book.ID - 1; // Adjust the index since IDs usually start from 1
+          const image = images[imageIndex]; // Get the corresponding image from the `images` array
           if (books.length === index + 1) {
-            return <Link  to={`/venue/${book.Name}`} key ={key} className="custom-link"><div className='venue-list' ref={lastBookElementRef} key={key}>{book.Capacity}</div></Link>;
+            return <Link  to={`/venue/${book.Name}`} key ={key} className="custom-link">
+              <div className='venue-list' ref={lastBookElementRef} key={key}>{book.Capacity}
+                  </div>
+              </Link>;
           } else {
-            return <Link  to={`/venue/${book.Name}`} key ={key} className="custom-link"><div className='venue-list' key={key}>{book.Name}</div></Link>;
+            return <Link  to={`/venue/${book.Name}`} key ={key} className="custom-link">
+              <div className='venue-list' key={key}>{book.Name}
+              {<img src={`data:image/png;base64,${image}`} alt={`Image ${book.ID}`} />}</div>
+              </Link>;
           }
         })}
         <div>{loading && 'Loading...'}</div>

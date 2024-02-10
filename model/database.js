@@ -67,13 +67,13 @@ async function get_Venue(pageNumber, pageSize, City) {
   const offset = (pageNumber - 1) * pageSize;
 
     if (City==='All'){
-    const result = await pool.query(`SELECT ID, Name, Capacity, Address FROM Venue ORDER BY ID LIMIT ? OFFSET ?`,
+    const result = await pool.query(`SELECT ID, Name, Capacity, Address, LandlordID FROM Venue ORDER BY ID LIMIT ? OFFSET ?`,
     [pageSize, offset]);
   return result[0];
     }
     else{
     const result = await pool.query(
-    `SELECT ID, Name, Capacity, Address FROM Venue WHERE City=? ORDER BY ID LIMIT ? OFFSET ?`,
+    `SELECT ID, Name, Capacity, Address, LandlordID FROM Venue WHERE City=? ORDER BY ID LIMIT ? OFFSET ?`,
     [City, pageSize, offset]);
   return result[0];
     }

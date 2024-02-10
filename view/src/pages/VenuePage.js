@@ -56,7 +56,12 @@ function VenuePage() {
             formData.append('Image', image);
           });
         }
+   
       });
+      formData.append('Name', venueInfo.Name);
+      formData.append('Capacity', venueInfo.Capacity);
+      formData.append('Address', venueInfo.Address);
+      formData.append('Category', venueInfo.Category);
 
       for (const value of formData.values()) {
       console.log("Brateeee", value);

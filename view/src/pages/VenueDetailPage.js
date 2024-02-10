@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Calendar from 'react-calendar';
+
 
 function VenueDetailPage() {
   const [venueInfo, setVenueInfo] = useState({
@@ -10,6 +12,13 @@ function VenueDetailPage() {
   });
 
   const { bookName } = useParams();
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log('Selected date:', date); // You can perform further actions based on the selected date
+  };
+
 
   useEffect(() => {
     async function getVenueInfo() {
@@ -36,12 +45,16 @@ function VenueDetailPage() {
   }, [bookName]);
 
   
+
+
+  
   return (
     <div className='VenuePage'>
       {venueInfo ? (
         <div>
-          {/* Render the venue information */}
           <h2>{venueInfo.Name}</h2>
+          {/* Render the calendar and time picker */}
+      <Calendar onChange={handleDateChange} value={selectedDate} />
           {/* Additional JSX to display other details */}
         </div>
       ) : (
@@ -52,5 +65,6 @@ function VenueDetailPage() {
 }
 
 export default VenueDetailPage;
+
 
 

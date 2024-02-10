@@ -57,3 +57,7 @@ EventID smallint NOT NULL);
 /*
 INSERT INTO Category (Name) VALUES ('Concert'), ('Theatre'), ('Film'), ('Sports'), ('Art Exhibitions'), ('Conference'), ('Party'), ('Fitness')
 */
+
+/*
+CREATE TABLE VenueAvailability (ID smallint NOT NULL AUTO_INCREMENT PRIMARY KEY, VenueID smallint NOT NULL, FOREIGN KEY (VenueID) REFERENCES Venue(ID), `Date` date NOT NULL, StartTime time, EndTime time, Status ENUM('available', 'booked'));
+*/
